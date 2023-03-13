@@ -1,8 +1,14 @@
 <script setup>
-import {ref} from 'vue'
+import { ref, computed } from 'vue'
+import hljs from 'highlight.js/lib/core'
+import nginx from 'highlight.js/lib/languages/nginx'
 
-const nginxCode = ref(`
-worker_processes  1;
+hljs.registerLanguage('nginx', nginx)
+
+const props = defineProps(['servers','mode'])
+
+function genCode() {
+    let code = `worker_processes  1;
 
 events {
     worker_connections  1024;
@@ -11,16 +17,26 @@ events {
 http {
     include       mime.types;
     default_type  application/octet-stream;
-
     sendfile        on;
-
     keepalive_timeout  65;
-
-    # 反向代理后端服务器
-    upstream backserver { 
-            server 127.0.0.1:8000; 
-            server 127.0.0.1:8001;
-            server 127.0.0.1:8002; 
+    
+    upstream backserver { `
+    if (props.mode === 'IP Hash') {
+        code += `
+            ip_hash;`
+    }
+    props.servers.forEach(server => {
+        if (server.online) {
+            code += `
+            server 127.0.0.1:${server.port}`
+            if (props.mode === '权重') {
+                code += ` weight ${server.weight};`
+            } else {
+                code += `;`
+            }
+        }
+    })
+    code += `
     }
 
     server {
@@ -30,16 +46,21 @@ http {
         location / {
             proxy_pass http://backserver;
         }
-        
     }
-    `)
+    `
+    return code;
+}
+
+const nginxCode = computed(() => {
+    return genCode();
+})
+
 </script>
 
 <template>
-    <n-card title="Nginx配置预览" :segmented="{ content: true, footer: 'soft' }"> 
-        <n-code :code="nginxCode" language="nginx" />
+    <n-card title="Nginx配置预览" :segmented="{ content: true, footer: 'soft' }">
+        <n-code :code="nginxCode" language="nginx" :hljs="hljs" />
     </n-card>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

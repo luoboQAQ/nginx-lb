@@ -19,6 +19,7 @@
     "@vue/eslint-config-prettier": "^7.1.0",
     "eslint": "^8.34.0",
     "eslint-plugin-vue": "^9.9.0",
+    "highlight.js": "^11.7.0",
     "naive-ui": "^2.34.3",
     "prettier": "^2.8.4",
     "unplugin-vue-components": "^0.24.1",

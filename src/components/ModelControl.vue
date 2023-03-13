@@ -6,15 +6,15 @@ const emit = defineEmits(['update:mode', 'update:servers'])
 
 const tableMode = ref("轮询")
 const serversMode = ref([
-    { name: '服务1', online: false, weight: 1 },
-    { name: '服务2', online: false, weight: 1 },
-    { name: '服务3', online: false, weight: 1 },
-    { name: '服务4', online: false, weight: 1 },
-    { name: '服务5', online: false, weight: 1 },
-    { name: '服务6', online: false, weight: 1 },
-    { name: '服务7', online: false, weight: 1 },
-    { name: '服务8', online: false, weight: 1 },
-    { name: '服务9', online: false, weight: 1 }])
+    { name: '服务1', online: false, weight: 1, port: 8000 },
+    { name: '服务2', online: false, weight: 1, port: 8001 },
+    { name: '服务3', online: false, weight: 1, port: 8002 },
+    { name: '服务4', online: false, weight: 1, port: 8003 },
+    { name: '服务5', online: false, weight: 1, port: 8004 },
+    { name: '服务6', online: false, weight: 1, port: 8005 },
+    { name: '服务7', online: false, weight: 1, port: 8006 },
+    { name: '服务8', online: false, weight: 1, port: 8007 },
+    { name: '服务9', online: false, weight: 1, port: 8008 }])
 
 function loadMode() {
     tableMode.value = props.mode
@@ -22,7 +22,8 @@ function loadMode() {
         return {
             name: server.name,
             online: server.online,
-            weight: server.weight
+            weight: server.weight,
+            port: server.port
         }
     })
 }
@@ -33,7 +34,8 @@ function updateMode() {
         return {
             name: server.name,
             online: server.online,
-            weight: server.weight
+            weight: server.weight,
+            port: server.port
         }
     })
     emit('update:servers', servers)
@@ -42,15 +44,15 @@ function updateMode() {
 function cleanMode() {
     tableMode.value = "轮询"
     serversMode.value = [
-    { name: '服务1', online: false, weight: 1 },
-    { name: '服务2', online: false, weight: 1 },
-    { name: '服务3', online: false, weight: 1 },
-    { name: '服务4', online: false, weight: 1 },
-    { name: '服务5', online: false, weight: 1 },
-    { name: '服务6', online: false, weight: 1 },
-    { name: '服务7', online: false, weight: 1 },
-    { name: '服务8', online: false, weight: 1 },
-    { name: '服务9', online: false, weight: 1 }]
+    { name: '服务1', online: false, weight: 1, port: 8000 },
+    { name: '服务2', online: false, weight: 1, port: 8001 },
+    { name: '服务3', online: false, weight: 1, port: 8002 },
+    { name: '服务4', online: false, weight: 1, port: 8003 },
+    { name: '服务5', online: false, weight: 1, port: 8004 },
+    { name: '服务6', online: false, weight: 1, port: 8005 },
+    { name: '服务7', online: false, weight: 1, port: 8006 },
+    { name: '服务8', online: false, weight: 1, port: 8007 },
+    { name: '服务9', online: false, weight: 1, port: 8008 }]
 }
 
 </script>
