@@ -1,12 +1,57 @@
 <script setup>
 import { ref } from 'vue'
 
-defineProps(['mode', 'servers'])
-defineEmits(['update:mode', 'update:servers'])
+const props = defineProps(['mode', 'servers'])
+const emit = defineEmits(['update:mode', 'update:servers'])
 
-const tableMode = ref(null)
-const serversMode = ref(null)
-const weightMode = ref([1, 1, 1, 1, 1, 1, 1, 1, 1])
+const tableMode = ref("轮询")
+const serversMode = ref([
+    { name: '服务1', online: false, weight: 1 },
+    { name: '服务2', online: false, weight: 1 },
+    { name: '服务3', online: false, weight: 1 },
+    { name: '服务4', online: false, weight: 1 },
+    { name: '服务5', online: false, weight: 1 },
+    { name: '服务6', online: false, weight: 1 },
+    { name: '服务7', online: false, weight: 1 },
+    { name: '服务8', online: false, weight: 1 },
+    { name: '服务9', online: false, weight: 1 }])
+
+function loadMode() {
+    tableMode.value = props.mode
+    serversMode.value = props.servers.map(server => {
+        return {
+            name: server.name,
+            online: server.online,
+            weight: server.weight
+        }
+    })
+}
+
+function updateMode() {
+    emit('update:mode', tableMode.value)
+    const servers = serversMode.value.map(server => {
+        return {
+            name: server.name,
+            online: server.online,
+            weight: server.weight
+        }
+    })
+    emit('update:servers', servers)
+}
+
+function cleanMode() {
+    tableMode.value = "轮询"
+    serversMode.value = [
+    { name: '服务1', online: false, weight: 1 },
+    { name: '服务2', online: false, weight: 1 },
+    { name: '服务3', online: false, weight: 1 },
+    { name: '服务4', online: false, weight: 1 },
+    { name: '服务5', online: false, weight: 1 },
+    { name: '服务6', online: false, weight: 1 },
+    { name: '服务7', online: false, weight: 1 },
+    { name: '服务8', online: false, weight: 1 },
+    { name: '服务9', online: false, weight: 1 }]
+}
 
 </script>
 
@@ -24,20 +69,21 @@ const weightMode = ref([1, 1, 1, 1, 1, 1, 1, 1, 1])
                 </n-radio-group>
             </n-form-item>
             <n-form-item label="服务器选择" size="large">
-                <n-checkbox-group v-model:value="serversMode" style="display: flex; flex-wrap: wrap;">
-                    <div v-for="(server, index) in servers" :key="server.name" style="max-width: calc(100% / 3 - 10px); margin: 5px;">
-                        <n-checkbox :label="server.name" :value="server.name">
+                <div style="display: flex; flex-wrap: wrap;">
+                    <div v-for="server in serversMode" :key="server.name"
+                        style="max-width: calc(100% / 3 - 10px); margin: 5px;">
+                        <n-checkbox :label="server.name" v-model:checked="server.online">
                             {{ server.name }}
                         </n-checkbox>
                         <n-input-number :min="1" :max="10" placeholder="请输入权重" :disabled="tableMode !== '权重'"
-                            v-model:value="weightMode[index]" />
+                            v-model:value="server.weight" />
                     </div>
-                </n-checkbox-group>
+                </div>
             </n-form-item>
             <div style="display: flex;">
-                <n-button type="info" style="margin-right: auto;">载入当前配置</n-button>
-                <n-button type="primary">提交</n-button>&nbsp;&nbsp;&nbsp;&nbsp;
-                <n-button>清空</n-button>
+                <n-button type="info" style="margin-right: auto;" @click="loadMode">载入当前配置</n-button>
+                <n-button type="primary" @click="updateMode">提交</n-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <n-button @click="cleanMode">清空</n-button>
             </div>
         </template>
     </n-card>

@@ -36,7 +36,7 @@ http {
 </script>
 
 <template>
-    <n-card title="Nginx配置预览"> 
+    <n-card title="Nginx配置预览" :segmented="{ content: true, footer: 'soft' }"> 
         <n-code :code="nginxCode" language="nginx" />
     </n-card>
 </template>
