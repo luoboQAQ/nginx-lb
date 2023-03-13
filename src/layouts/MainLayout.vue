@@ -20,7 +20,7 @@ const mode = ref('轮询')
 </script>
 
 <template>
-  <n-grid x-gap="12">
+  <n-grid x-gap="12" style="align-items: flex-end;">
     <n-gi span="6" >
       <ServerInfo :servers="servers"/>
     </n-gi>
