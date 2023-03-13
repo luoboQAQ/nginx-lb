@@ -9,8 +9,10 @@ const onlineNum = computed(() => myServers.servers.filter(server => server.onlin
 
 <template>
     <n-card title="系统状态" :segmented="{ content: true, footer: 'soft' }">
-        <p class="status">当前在线： {{ onlineNum }}</p>
-        <p class="status">服务总数： {{ servers.length }}</p>
+      <div class="status">
+        <p>当前在线： {{ onlineNum }}</p>
+        <p>服务总数： {{ servers.length }}</p>
+      </div>
         <template #footer>
             <p v-for="server in servers" :key="server.name" class="detail">
                 {{ server.name }}: &nbsp;&nbsp;&nbsp;&nbsp;

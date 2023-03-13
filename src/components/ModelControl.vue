@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue'
+import { useMessage } from 'naive-ui'
 
 const props = defineProps(['mode', 'servers'])
 const emit = defineEmits(['update:mode', 'update:servers'])
+const message = useMessage();
 
 const tableMode = ref("轮询")
 const serversMode = ref([
@@ -29,6 +31,17 @@ function loadMode() {
 }
 
 function updateMode() {
+    let check = false
+    serversMode.value.forEach(server => {
+        if (server.online) {
+            check = true
+        }
+    })
+    if (!check) {
+        message.error('请至少选择一个服务')
+        return
+    }
+
     emit('update:mode', tableMode.value)
     const servers = serversMode.value.map(server => {
         return {

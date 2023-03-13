@@ -21,14 +21,16 @@ const mode = ref('轮询')
 
 <template>
   <n-grid x-gap="12">
-    <n-gi span="6" style="height: 80vh;">
-      <ServerInfo :servers="servers" />
+    <n-gi span="6" >
+      <ServerInfo :servers="servers"/>
     </n-gi>
     <n-gi span="12">
       <n-gradient-text :size="60" type="success" class="title">
         基于Nginx的负载均衡管理界面
       </n-gradient-text>
-      <ModelControl v-model:servers="servers" v-model:mode="mode" />
+      <n-message-provider>
+        <ModelControl v-model:servers="servers" v-model:mode="mode" />
+      </n-message-provider>
     </n-gi>
     <n-gi span="6">
       <ShowCode :servers="servers" :mode="mode"/>
