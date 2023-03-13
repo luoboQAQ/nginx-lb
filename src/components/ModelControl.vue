@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref,computed } from 'vue'
 import { useMessage } from 'naive-ui'
 
 const props = defineProps(['mode', 'servers'])
@@ -68,12 +68,23 @@ function cleanMode() {
     { name: '服务9', online: false, weight: 1, port: 8008 }]
 }
 
+const tagStyle = computed(() => {
+  if(props.mode==="轮询"){
+    return "success"}
+    else if(props.mode==="权重"){
+      return "warning"
+    }
+    else{
+      return "info"
+    }
+})
+
 </script>
 
 <template>
     <n-card title="模式管理" :segmented="{ content: true, footer: 'soft' }">
-        <p style="font-size: 20px;">
-            当前模式： {{ mode }}
+        <p style="font-size: 20px;" >
+            当前模式：<n-tag :type="tagStyle" style="font-size: 20px;">{{ mode }}</n-tag> 
         </p>
         <template #footer>
             <n-form-item label="模式选择" size="large">

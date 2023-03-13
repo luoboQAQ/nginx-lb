@@ -2,9 +2,9 @@
 import { computed } from 'vue'
 import { CloudCheckmark16Regular, CloudDismiss16Regular } from '@vicons/fluent'
 
-const myServers = defineProps(['servers'])
+const props = defineProps(['servers'])
 
-const onlineNum = computed(() => myServers.servers.filter(server => server.online).length)
+const onlineNum = computed(() => props.servers.filter(server => server.online).length)
 </script>
 
 <template>
