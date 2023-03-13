@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import hljs from 'highlight.js/lib/core'
 import nginx from 'highlight.js/lib/languages/nginx'
 
@@ -7,7 +7,7 @@ hljs.registerLanguage('nginx', nginx)
 
 const props = defineProps(['servers','mode'])
 
-function genCode() {
+const nginxCode = computed(() => {
     let code = `worker_processes  1;
 
 events {
@@ -49,10 +49,6 @@ http {
     }
     `
     return code;
-}
-
-const nginxCode = computed(() => {
-    return genCode();
 })
 
 </script>
