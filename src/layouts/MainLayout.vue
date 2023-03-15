@@ -33,7 +33,9 @@ const mode = ref('轮询')
       </n-message-provider>
     </n-gi>
     <n-gi span="6">
-      <ShowCode :servers="servers" :mode="mode"/>
+      <n-message-provider>
+        <ShowCode :servers="servers" :mode="mode"/>       
+      </n-message-provider>
     </n-gi>
   </n-grid>
 </template>
