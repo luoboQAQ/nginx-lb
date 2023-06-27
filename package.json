@@ -24,6 +24,6 @@
     "naive-ui": "^2.34.3",
     "prettier": "^2.8.4",
     "unplugin-vue-components": "^0.24.1",
-    "vite": "^4.1.4"
+    "vite": "^4.1.5"
   }
 }
